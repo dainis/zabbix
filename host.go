@@ -26,6 +26,10 @@ type Host struct {
 	Name      string        `json:"name"`
 	Status    StatusType    `json:"status"`
 
+	TlsConnect     int    `json:"tls_connect"`
+	TlsPskIdentity string `json:"tls_psk_identity"`
+	TlsPsk         string `json:"tls_psk"`
+
 	// Fields below used only when creating hosts
 	GroupIds    HostGroupIds   `json:"groups,omitempty"`
 	Interfaces  HostInterfaces `json:"interfaces,omitempty"`
