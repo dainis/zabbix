@@ -15,6 +15,7 @@ def run(cmd)
 end
 
 run('curl http://repo.zabbix.com/zabbix-official-repo.key 2>/dev/null| apt-key add -')
+run('curl https://www.postgresql.org/media/keys/ACCC4CF8.asc 2>/dev/null| apt-key add -')
 run("add-apt-repository 'deb http://repo.zabbix.com/zabbix/#{ZABBIX_VERSION}/ubuntu/ xenial main non-free contrib'")
 
 # remove apt.postgresql.org repository and use only standard one,
