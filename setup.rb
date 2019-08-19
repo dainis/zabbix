@@ -39,7 +39,7 @@ end
 run('apt-get install -y zabbix-server-pgsql zabbix-frontend-php')
 run('a2enmod proxy_fcgi setenvif')
 run('a2enconf php7.3-fpm')
-
+run('find /etc -type d')
 conf = File.read('/etc/dbconfig-common/zabbix-server-pgsql.conf')
 password = /dbc_dbpass='(\w+)'/.match(conf)[1]
 
