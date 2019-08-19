@@ -31,12 +31,14 @@ run("LC_ALL=C.UTF-8 add-apt-repository -y ppa:ondrej/php")
 
 run('apt-get update')
 run('apt-get install -y postgresql-11')
-run('apt-get install -y apache2 libapache2-mod-php5 php5-pgsql')
-File.open('/etc/php5/apache2/php.ini', 'a') do |f|
+run('apt-get install -y apache2 php7.3-fpm php7.3-mysql')
+File.open('/etc/php/7.3/fpm/php.ini', 'a') do |f|
   f.puts '[Date]'
   f.puts 'date.timezone = UTC'
 end
 run('apt-get install -y zabbix-server-pgsql zabbix-frontend-php')
+run('a2enmod proxy_fcgi setenvif')
+run('a2enconf php7.3-fpm')
 
 conf = File.read('/etc/dbconfig-common/zabbix-server-pgsql.conf')
 password = /dbc_dbpass='(\w+)'/.match(conf)[1]
