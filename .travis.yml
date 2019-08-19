@@ -12,6 +12,6 @@ env:
     - TEST_ZABBIX_PASSWORD=zabbix
     - TEST_ZABBIX_VERBOSE=1
   matrix:
-    - ZABBIX_VERSION=2.4
+    - ZABBIX_VERSION=3.0
 
 before_install: sudo hostname travis && sudo -E ./setup.rb
