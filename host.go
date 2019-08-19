@@ -27,6 +27,7 @@ type Host struct {
 	Status    StatusType    `json:"status"`
 
 	TlsConnect     int    `json:"tls_connect"`
+	TlsAccept      int    `json:"tls_accept"`
 	TlsPskIdentity string `json:"tls_psk_identity"`
 	TlsPsk         string `json:"tls_psk"`
 
