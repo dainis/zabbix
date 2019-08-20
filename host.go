@@ -31,6 +31,8 @@ type Host struct {
 	TlsPskIdentity string `json:"tls_psk_identity"`
 	TlsPsk         string `json:"tls_psk"`
 
+	ProxyHostId string `json:"proxy_hostid"`
+
 	// Fields below used only when creating hosts
 	GroupIds    HostGroupIds   `json:"groups,omitempty"`
 	Interfaces  HostInterfaces `json:"interfaces,omitempty"`
