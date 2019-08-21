@@ -16,3 +16,8 @@ const (
 	ActiveProxy  StatusType = 5
 	PassiveProxy StatusType = 6
 )
+
+const (
+	ZbxApiErrorParameters int = -32602
+	ZbxApiErrorInternal   int = -32500
+)
