@@ -117,7 +117,7 @@ func (api *API) ProxiesDeleteByIds(ids []string) (err error) {
 	response, err := api.CallWithError("proxy.delete", proxyIds)
 	if err != nil {
 		// Zabbix 2.4 uses new syntax only
-		if e, ok := err.(*Error); ok && e.Code == -32602 {
+		if e, ok := err.(*Error); ok && e.Code == ZbxApiErrorParameters {
 			response, err = api.CallWithError("proxy.delete", ids)
 		}
 	}
