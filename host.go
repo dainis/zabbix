@@ -4,19 +4,6 @@ import (
 	"github.com/AlekSi/reflector"
 )
 
-type (
-	AvailableType int
-	StatusType    int
-)
-
-const (
-	Available   AvailableType = 1
-	Unavailable AvailableType = 2
-
-	Monitored   StatusType = 0
-	Unmonitored StatusType = 1
-)
-
 // https://www.zabbix.com/documentation/2.2/manual/appendix/api/host/definitions
 type Host struct {
 	HostId    string        `json:"hostid,omitempty"`
