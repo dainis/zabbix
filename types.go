@@ -12,4 +12,7 @@ const (
 
 	Monitored   StatusType = 0
 	Unmonitored StatusType = 1
+
+	ActiveProxy  StatusType = 5
+	PassiveProxy StatusType = 6
 )
