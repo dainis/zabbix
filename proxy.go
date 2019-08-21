@@ -4,7 +4,7 @@ import (
 	"github.com/AlekSi/reflector"
 )
 
-// https://www.zabbix.com/documentation/2.2/manual/appendix/api/proxy/definitions
+// https://www.zabbix.com/documentation/2.0/manual/appendix/api/proxy/definitions
 type Proxy struct {
 	ProxyId    string        `json:"proxyid,omitempty"`
 	Host       string        `json:"host"`
@@ -13,6 +13,9 @@ type Proxy struct {
 
 	// Fields below used only when creating proxies
 	Interfaces HostInterfaces `json:"interfaces,omitempty"`
+
+	// https://www.zabbix.com/documentation/2.2/manual/appendix/api/proxy/definitions
+	Interface HostInterface `json:"interface,omitempty"`
 
 	// https://www.zabbix.com/documentation/3.0/manual/appendix/api/proxy/definitions
 	Description    string `json:"description"`
@@ -24,7 +27,7 @@ type Proxy struct {
 
 type Proxies []Proxy
 
-// Wrapper for proxy.get: https://www.zabbix.com/documentation/2.2/manual/appendix/api/proxy/get
+// Wrapper for proxy.get: https://www.zabbix.com/documentation/2.0/manual/appendix/api/proxy/get
 func (api *API) ProxiesGet(params Params) (res Proxies, err error) {
 	if _, present := params["output"]; !present {
 		params["output"] = "extend"
