@@ -3,6 +3,7 @@ package zabbix
 type (
 	AvailableType int
 	StatusType    int
+	TimestampType uint64
 )
 
 const (
