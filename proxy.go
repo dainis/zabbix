@@ -6,17 +6,20 @@ import (
 
 // https://www.zabbix.com/documentation/2.2/manual/appendix/api/proxy/definitions
 type Proxy struct {
-	ProxyId string     `json:"proxyid,omitempty"`
-	Host    string     `json:"host"`
-	Status  StatusType `json:"status"`
+	ProxyId    string        `json:"proxyid,omitempty"`
+	Host       string        `json:"host"`
+	Status     StatusType    `json:"status"`
+	LastAccess TimestampType `json:"lastaccess"`
 
+	// Fields below used only when creating proxies
+	Interfaces HostInterfaces `json:"interfaces,omitempty"`
+
+	// https://www.zabbix.com/documentation/3.0/manual/appendix/api/proxy/definitions
+	Description    string `json:"description"`
 	TlsConnect     int    `json:"tls_connect"`
 	TlsAccept      int    `json:"tls_accept"`
 	TlsPskIdentity string `json:"tls_psk_identity"`
 	TlsPsk         string `json:"tls_psk"`
-
-	// Fields below used only when creating proxies
-	Interfaces HostInterfaces `json:"interfaces,omitempty"`
 }
 
 type Proxies []Proxy
