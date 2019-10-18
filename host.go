@@ -4,19 +4,6 @@ import (
 	"github.com/AlekSi/reflector"
 )
 
-type (
-	AvailableType int
-	StatusType    int
-)
-
-const (
-	Available   AvailableType = 1
-	Unavailable AvailableType = 2
-
-	Monitored   StatusType = 0
-	Unmonitored StatusType = 1
-)
-
 // https://www.zabbix.com/documentation/2.2/manual/appendix/api/host/definitions
 type Host struct {
 	HostId    string        `json:"hostid,omitempty"`
@@ -25,6 +12,13 @@ type Host struct {
 	Error     string        `json:"error"`
 	Name      string        `json:"name"`
 	Status    StatusType    `json:"status"`
+
+	TlsConnect     int    `json:"tls_connect"`
+	TlsAccept      int    `json:"tls_accept"`
+	TlsPskIdentity string `json:"tls_psk_identity"`
+	TlsPsk         string `json:"tls_psk"`
+
+	ProxyHostId string `json:"proxy_hostid"`
 
 	// Fields below used only when creating hosts
 	GroupIds    HostGroupIds   `json:"groups,omitempty"`
@@ -141,7 +135,7 @@ func (api *API) HostsDeleteByIds(ids []string) (err error) {
 	response, err := api.CallWithError("host.delete", hostIds)
 	if err != nil {
 		// Zabbix 2.4 uses new syntax only
-		if e, ok := err.(*Error); ok && e.Code == -32500 {
+		if e, ok := err.(*Error); ok && e.Code == ZbxApiErrorInternal {
 			response, err = api.CallWithError("host.delete", ids)
 		}
 	}
