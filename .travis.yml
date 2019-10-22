@@ -1,10 +1,9 @@
 sudo: required
-dist: precise
+dist: xenial
 language: go
 
 go:
   - 1.6.2
-  - tip
 
 env:
   global:
@@ -13,8 +12,6 @@ env:
     - TEST_ZABBIX_PASSWORD=zabbix
     - TEST_ZABBIX_VERBOSE=1
   matrix:
-    - ZABBIX_VERSION=2.0
-    - ZABBIX_VERSION=2.2
-    - ZABBIX_VERSION=2.4
+    - ZABBIX_VERSION=3.0
 
 before_install: sudo hostname travis && sudo -E ./setup.rb

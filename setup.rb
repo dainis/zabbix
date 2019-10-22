@@ -14,29 +14,33 @@ def run(cmd)
   end
 end
 
-run('wget -qO - http://repo.zabbix.com/zabbix-official-repo.key | apt-key add -')
-run("add-apt-repository 'deb http://repo.zabbix.com/zabbix/#{ZABBIX_VERSION}/ubuntu/ precise main non-free contrib'")
+run('curl http://repo.zabbix.com/zabbix-official-repo.key 2>/dev/null| apt-key add -')
+run('curl "https://keyserver.ubuntu.com/pks/lookup?op=get&search=0xb97b0afcaa1a47f044f244a07fcc7d46accc4cf8" 2>/dev/null| apt-key add -')
+run("add-apt-repository 'deb http://repo.zabbix.com/zabbix/#{ZABBIX_VERSION}/ubuntu/ xenial main non-free contrib'")
+run("LC_ALL=C.UTF-8 add-apt-repository -y ppa:ondrej/php")
 
 # remove apt.postgresql.org repository and use only standard one,
 # otherwise Zabbix 2.0 will not be installed with error:
 #   The following packages have unmet dependencies:
 #   zabbix-server-pgsql : Depends: libiodbc2 (>= 3.52.7) but it is not going to be installed
 #   E: Unable to correct problems, you have held broken packages.
-run("add-apt-repository --remove 'deb http://apt.postgresql.org/pub/repos/apt/ precise-pgdg main'")
-run('apt-get purge -y postgresql.*')
-run('apt-get autoremove --purge')
-run('rm -fr /var/lib/postgresql /etc/postgresql')
+#run("add-apt-repository --remove 'deb http://apt.postgresql.org/pub/repos/apt/ precise-pgdg main'")
+#run('apt-get purge -y postgresql.*')
+#run('apt-get autoremove --purge')
+#run('rm -fr /var/lib/postgresql /etc/postgresql')
 
 run('apt-get update')
-run('apt-get install -y postgresql-9.1')
-run('apt-get install -y apache2 libapache2-mod-php5 php5-pgsql')
-File.open('/etc/php5/apache2/php.ini', 'a') do |f|
+run('apt-get install -y postgresql-11')
+run('apt-get install -y apache2 php7.3-fpm php7.3-mysql')
+File.open('/etc/php/7.3/fpm/php.ini', 'a') do |f|
   f.puts '[Date]'
   f.puts 'date.timezone = UTC'
 end
 run('apt-get install -y zabbix-server-pgsql zabbix-frontend-php')
-
-conf = File.read('/etc/dbconfig-common/zabbix-server-pgsql.conf')
+run('a2enmod proxy_fcgi setenvif')
+run('a2enconf php7.3-fpm')
+run('find /etc -type d')
+conf = File.read('/etc/postgresql-common/zabbix-server-pgsql.conf')
 password = /dbc_dbpass='(\w+)'/.match(conf)[1]
 
 File.open('/usr/share/zabbix/conf/zabbix.conf.php', 'w') do |f| f.puts <<-END
